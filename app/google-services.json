@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "68618394346",
+    "project_id": "anbean-b8311",
+    "storage_bucket": "anbean-b8311.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68618394346:android:d5b04a40f1fef0979d5593",
+        "android_client_info": {
+          "package_name": "com.example.anbean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68618394346-udi4594omm75dmeh5chpajs0i2na8gb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8HXkFs6_IBZD1158wNLFUVhY2MdIqZ34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68618394346-udi4594omm75dmeh5chpajs0i2na8gb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
