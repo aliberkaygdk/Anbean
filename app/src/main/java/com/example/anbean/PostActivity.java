@@ -1,13 +1,20 @@
 package com.example.anbean;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -33,12 +40,15 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
 
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private static final int CAMERA_REQUEST = 1888;
 
-   // static int CAPTURE_CODE=1001;
+    int num;
     private Uri mImageUri;
     String miUrlOk = "";
     private StorageTask uploadTask;
@@ -74,24 +84,47 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+        AlertDialog.Builder dialog = new AlertDialog.Builder(PostActivity.this);
+        dialog.setTitle("ANBEANLA");
+        dialog.setMessage("Galeriden mi yoksa Kameradan mı?");
+        dialog.setPositiveButton("Galeriden Anbeanla", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                CropImage.activity()
+                        .setAspectRatio(1, 1)
+                        .start(PostActivity.this);
+            }
+        });
 
-        CropImage.activity()
-                .setAspectRatio(1,1)
-                .start(PostActivity.this);
+        dialog.setNegativeButton("Kameradan Anbeanla", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                num = 1;
+
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                } else {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            }
+        });
+        dialog.show();
 
 
     }
-    private String getFileExtension(Uri uri){
+
+    private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void uploadImage_10(){
+    private void uploadImage_10() {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Posting");
         pd.show();
-        if (mImageUri != null){
+        if (mImageUri != null) {
             final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
 
@@ -143,32 +176,56 @@ public class PostActivity extends AppCompatActivity {
             Toast.makeText(PostActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
         }
     }
-    /*public void openCamera(){
 
-        ContentValues values=new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE,"new image");
-        values.put(MediaStore.Images.Media.DESCRIPTION,"by camera");
-        mImageUri=getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
-        Intent camIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        camIntent.putExtra(MediaStore.EXTRA_OUTPUT,mImageUri);
-        startActivityForResult(camIntent,CAPTURE_CODE);
-    }*/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            } else {
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (num == 1) {
+            if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            mImageUri = result.getUri();
+                mImageUri=getImageUri(PostActivity.this,photo);
 
-            image_added.setImageURI(mImageUri);
-        } else {
-            Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(PostActivity.this, MainActivity.class));
-            finish();
+
+                image_added.setImageURI(mImageUri);
+            }
         }
+        if (num != 1) {
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                mImageUri = result.getUri();
+
+                image_added.setImageURI(mImageUri);
+            } else {
+                Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(PostActivity.this, MainActivity.class));
+                finish();
+            }
+        }
+
     }
 }
 

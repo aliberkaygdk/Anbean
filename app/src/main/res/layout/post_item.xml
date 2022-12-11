@@ -6,12 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_launcher_background"
         android:id="@+id/more"
-        android:layout_margin="15dp"/>
+        android:layout_width="39dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_more" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,12 +30,14 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/image_profile"
+                android:src="@drawable/ic_launcher_background"
                 android:layout_margin="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/username"
+                android:text="username"
                 android:layout_gravity="center_vertical"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -47,6 +52,7 @@
             <ImageView
                 android:id="@+id/post_image"
                 android:layout_width="0dp"
+                android:src="@mipmap/ic_launcher"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,12 +95,14 @@
             android:layout_marginStart="8dp"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:text="Likes"
             android:id="@+id/likes"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:text="publisher"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:id="@+id/publisher"/>
@@ -104,6 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textColor="@color/black"
+            android:text="Description"
             android:id="@+id/description"/>
 
         <TextView
@@ -112,7 +121,7 @@
             android:text="View All 20 Comments"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
-            android:textColor="@color/black"
+            android:textColor="@color/gray_blue"
             android:id="@+id/comments"
             android:layout_marginBottom="10dp"/>
 

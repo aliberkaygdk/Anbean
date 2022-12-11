@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-   /* @Override
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-    }*/
+    }
 
     public void login(View view) {
         String emailRead = binding.editTextId.getText().toString();
