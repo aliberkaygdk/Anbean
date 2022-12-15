@@ -17,15 +17,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginBottom="2dp" >
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="500dp"
-            android:onClick="exit"
-            android:text="button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
     </FrameLayout>
 
     <com.google.android.material.appbar.AppBarLayout

@@ -63,6 +63,9 @@ public class CommentsActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Intent intent=getIntent();
+        postid=intent.getStringExtra("postid");
+        publisherid=intent.getStringExtra("publisherid");
 
 
         recyclerView=findViewById(R.id.recycler_view);
@@ -79,9 +82,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
-        Intent intent=getIntent();
-        postid=intent.getStringExtra("postid");
-        publisherid=intent.getStringExtra("publisherid");
+
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,12 +102,30 @@ public class CommentsActivity extends AppCompatActivity {
     private void addComment(){
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Comments").child(postid);
 
+        String commentid = reference.push().getKey();
+
         HashMap<String,Object> hashMap=new HashMap<>();
         hashMap.put("comment",addcomment.getText().toString());
         hashMap.put("publisher",firebaseUser.getUid());
+        hashMap.put("commentid", commentid);
+
+
+        reference.child(commentid).setValue(hashMap);
+        addNotifications();
+        addcomment.setText("");
+
+    }
+
+    private void addNotifications(){
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Notifications").child(publisherid);
+
+        HashMap<String,Object>hashMap=new HashMap<>();
+        hashMap.put("userid",firebaseUser.getUid());
+        hashMap.put("text","commented: "+addcomment.getText().toString());
+        hashMap.put("postid",postid);
+        hashMap.put("ispost",true);
 
         reference.push().setValue(hashMap);
-        addcomment.setText("");
 
     }
 

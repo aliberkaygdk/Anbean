@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PostActivity">
+    android:layout_height="match_parent"
+    tools:context=".EditProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground">
 
-        <Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,15 +28,27 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_close"
                     android:id="@+id/close"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Edit Profile"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@id/close"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="POST"
-                    android:id="@+id/post"
+                    android:text="SAVE"
+                    android:id="@+id/save"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
@@ -45,7 +57,8 @@
 
             </RelativeLayout>
 
-        </Toolbar>
+
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -54,25 +67,44 @@
         android:padding="8dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="fitXY"
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_launcher"
             android:layout_gravity="center"
+            android:id="@+id/image_profile"
+            android:layout_margin="10dp"/>
 
-            android:id="@+id/image_added"/>
-
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Photo"
+            android:layout_gravity="center"
+            android:id="@+id/tv_change"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:hint="Description"
-            android:id="@+id/description"
-            android:maxLines="5"/>
+            android:layout_marginTop="20dp"
+            android:hint="Full Name"
+            android:id="@+id/fullname"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:id="@+id/username"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Bio"
+            android:id="@+id/bio"
+           />
 
     </LinearLayout>
 

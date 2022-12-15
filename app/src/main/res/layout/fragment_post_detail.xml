@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.NotificationFragment">
+    tools:context=".Fragments.PostDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
@@ -25,7 +25,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Notifications"
+                    android:text="Photo"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
 
@@ -35,9 +35,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycler_view"/>
+        android:layout_below="@id/bar"
+        android:id="@+id/recycler_view"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

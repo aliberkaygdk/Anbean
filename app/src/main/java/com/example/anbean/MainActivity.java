@@ -91,9 +91,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-    public void exit(View view) {
-        auth.signOut();
-        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-        finish();
-    }
+
 }

@@ -32,12 +32,12 @@
                     android:id="@+id/username"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/options"
-                    android:src="@drawable/ic_settings"
+                    android:layout_width="43dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_settings" />
 
             </RelativeLayout>
 
@@ -55,28 +55,28 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/top_bar"
-                android:padding="16dp"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:id="@+id/image_profile"/>
+                    android:id="@+id/image_profile"
+                    android:layout_width="96dp"
+                    android:layout_height="115dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="111dp"
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
-                    android:paddingRight="4dp"
-                    android:layout_height="80dp">
+                    android:paddingRight="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:gravity="center"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -85,18 +85,18 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/posts"
-                                android:textColor="@color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:textColor="@color/black"
                                 android:textSize="18sp"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="posts"/>
+                                android:text="posts" />
 
                         </LinearLayout>
 
@@ -107,18 +107,18 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/followers"
-                                android:textColor="@color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:textColor="@color/black"
                                 android:textSize="18sp"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="followers"/>
+                                android:text="followers" />
 
                         </LinearLayout>
 
@@ -129,58 +129,57 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/following"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
                                 android:layout_gravity="center"
+                                android:textColor="@color/black"
                                 android:textSize="18sp"
-                                android:id="@+id/following"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="73dp"
                                 android:layout_height="wrap_content"
-                                android:text="following"/>
+                                android:text="following" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
                     <Button
+                        android:id="@+id/edit_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:id="@+id/edit_profile"
-                        />
+                        android:layout_marginTop="8dp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
                 android:id="@+id/mid_bar"
+                android:layout_width="match_parent"
+                android:layout_height="91dp"
                 android:layout_below="@id/top_bar"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="12dp">
 
                 <TextView
+                    android:id="@+id/fullname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:id="@+id/fullname"
-                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/bio"
                     android:maxLines="5"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -192,15 +191,17 @@
                 android:layout_marginLeft="-5dp"
                 android:layout_marginRight="-5dp"
                 android:id="@+id/last_bar"
+                android:background="@drawable/button_black"
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:id="@+id/my_fotos"
-                    android:src="@drawable/ic_grid"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:src="@drawable/ic_grid" />
 
                 <ImageButton
                     android:layout_width="0dp"
@@ -208,15 +209,16 @@
                     android:id="@+id/saved_fotos"
                     android:src="@drawable/ic_savee_black"
                     android:layout_height="wrap_content"
+
                     style="?android:attr/buttonBarButtonStyle"/>
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/last_bar"
-                android:id="@+id/recycler_view"/>
+                android:layout_height="364dp"
+                android:layout_below="@id/last_bar" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

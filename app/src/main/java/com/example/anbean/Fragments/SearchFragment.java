@@ -50,7 +50,7 @@ public class SearchFragment extends Fragment {
         search_bar = view.findViewById(R.id.search_bar);
 
         userList = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(),userList);
+        userAdapter = new UserAdapter(getContext(), userList, true);
         recyclerView.setAdapter(userAdapter);
 
         readUsers();
@@ -74,16 +74,16 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    private void searchUsers(String s){
+    private void searchUsers(String s) {
         Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username")
                 .startAt(s)
-                .endAt(s+"\uf8ff");
+                .endAt(s + "\uf8ff");
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
                     userList.add(user);
                 }
