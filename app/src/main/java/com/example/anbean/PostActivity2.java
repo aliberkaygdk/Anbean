@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+// Image capture class. We was not using.
 public class PostActivity2 extends AppCompatActivity {
     ImageView userpic;
     private static final int GalleryPick = 1;

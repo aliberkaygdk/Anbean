@@ -84,7 +84,9 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(PostActivity.this);
+        //alertdialog devre dışı bırakıldı
+
+       /* AlertDialog.Builder dialog = new AlertDialog.Builder(PostActivity.this);
         dialog.setTitle("ANBEANLA");
         dialog.setMessage("Galeriden mi yoksa Kameradan mı?");
         dialog.setPositiveButton("Galeriden Anbeanla", new DialogInterface.OnClickListener() {
@@ -109,8 +111,11 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
-        dialog.show();
+        dialog.show();*/
 
+        CropImage.activity()
+                .setAspectRatio(1, 1)
+                .start(PostActivity.this);
 
     }
 
@@ -191,18 +196,21 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    //Bitmap - uri dönüşümü
+    /*public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (num == 1) {
+        //Burayı devre dışı bıraktım çünkü farklı android sürümlerinde direkt fotoğraf çekip imageviewa atılmıyor
+        //ve atılsa bile fotoğraf kırpılmıyor. Profil Fragmentinde çirkin görünüyor.
+        /*if (num == 1) {
             if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
 
@@ -211,7 +219,8 @@ public class PostActivity extends AppCompatActivity {
 
                 image_added.setImageURI(mImageUri);
             }
-        }
+        }*/
+
         if (num != 1) {
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
@@ -220,7 +229,7 @@ public class PostActivity extends AppCompatActivity {
 
                 image_added.setImageURI(mImageUri);
             } else {
-                Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Something gone wrong or you are cancelled this!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(PostActivity.this, MainActivity.class));
                 finish();
             }
