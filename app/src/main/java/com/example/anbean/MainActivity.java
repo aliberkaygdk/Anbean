@@ -7,17 +7,22 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,8 +58,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    TextView locationTV, temperature,textweather;
+    private static final int REQUEST_CHECK_SETTINGS = 111;
+    TextView locationTV, temperature, textweather;
     String cityName;
 
 
@@ -79,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         locationTV = findViewById(R.id.location);
 
         temperature = findViewById(R.id.temp);
-        textweather=findViewById(R.id.weatherDetail);
+        textweather = findViewById(R.id.weatherDetail);
 
 
         Bundle intent = getIntent().getExtras();
@@ -102,21 +107,52 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1000);
         } else {
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            try {
 
-                String city = hereLocation(location.getLatitude(), location.getLongitude());
-                locationTV.setText(city);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(MainActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                try {
+
+                    String city = hereLocation(location.getLatitude(), location.getLongitude());
+                    locationTV.setText(city);
+                    getWeatherData(locationTV.getText().toString().trim());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Not Found GPS", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                showSettingAlert();
+
+
             }
+
+
         }
 
-        getWeatherData(locationTV.getText().toString().trim());
+    }
 
 
+    public void showSettingAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("GPS setting!");
+        alertDialog.setMessage("GPS is not enabled, Do you want to go to settings menu? ");
+        alertDialog.setPositiveButton("Setting", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
 
+
+            }
+        });
+        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                finish();
+                System.exit(0);
+            }
+        });
+        alertDialog.show();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -162,8 +198,6 @@ public class MainActivity extends AppCompatActivity {
             };
 
 
-
-
     public String hereLocation(double lat, double lon) {
 
         String cityName = "";
@@ -185,42 +219,44 @@ public class MainActivity extends AppCompatActivity {
         }
         return cityName;
     }
+
     @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case 1000:{
-                if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                    LocationManager locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    @SuppressLint("MissingPermission") Location location=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        switch (requestCode) {
+            case 1000: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     try {
 
                         String city = hereLocation(location.getLatitude(), location.getLongitude());
                         locationTV.setText(city);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(MainActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(this, "Permisson not granted", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
         }
     }
-    private void getWeatherData(String name){
-        ApiInterface apiInterface= ApiClient.getClient().create(ApiInterface.class);
 
-        Call<Example>call=apiInterface.getWeatherData(name);
+    private void getWeatherData(String name) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<Example> call = apiInterface.getWeatherData(name);
 
         call.enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
 
 
-                temperature.setText(response.body().getMain().getTemp()+"°C");
-                textweather.setText("Weather: "+ response.body().getWeatherList().get(0).getwMain());
-                //System.out.println(a);
+                temperature.setText(response.body().getMain().getTemp() + "°C");
+                textweather.setText("Weather: " + response.body().getWeatherList().get(0).getwMain());
+
             }
 
             @Override
