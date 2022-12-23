@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "68618394346",
-    "project_id": "anbean-b8311",
-    "storage_bucket": "anbean-b8311.appspot.com"
+    "project_number": "628771318552",
+    "project_id": "anbean-2b59d",
+    "storage_bucket": "anbean-2b59d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:68618394346:android:d5b04a40f1fef0979d5593",
+        "mobilesdk_app_id": "1:628771318552:android:6a7a497ff18f8f83c8cc6d",
         "android_client_info": {
-          "package_name": "com.example.anbean"
+          "package_name": "com.aliberkaygediko.anbean"
         }
       },
       "oauth_client": [
         {
-          "client_id": "68618394346-udi4594omm75dmeh5chpajs0i2na8gb5.apps.googleusercontent.com",
+          "client_id": "628771318552-d5qigalipo91dt8qmbsbh8kgdqqv7g1o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA8HXkFs6_IBZD1158wNLFUVhY2MdIqZ34"
+          "current_key": "AIzaSyBqoe6fBxdgvpIIoS6PqyUfafgK4b5T0Wg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "68618394346-udi4594omm75dmeh5chpajs0i2na8gb5.apps.googleusercontent.com",
+              "client_id": "628771318552-d5qigalipo91dt8qmbsbh8kgdqqv7g1o.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

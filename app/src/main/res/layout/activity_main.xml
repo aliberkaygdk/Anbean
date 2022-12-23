@@ -11,25 +11,27 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         android:id="@+id/top_bar">
+
         <Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="?android:attr/windowBackground">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="180dp"
                     android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:text="ANBEAN"
-                    android:textStyle="bold"
+                    android:textColor="@color/gray_blue"
 
 
                     android:textSize="45dp"
-                    android:textColor="@color/gray_blue"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/location"
@@ -38,29 +40,41 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginHorizontal="60dp"
                     android:layout_marginTop="1dp"
-                    android:layout_marginEnd="139dp"
+                    android:layout_marginEnd="131dp"
                     android:layout_marginBottom="9dp"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/temp"
-                    android:layout_width="67dp"
+                    android:layout_width="71dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="141dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="130dp"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/weatherDetail"
-                    android:layout_width="115dp"
-                    android:layout_height="30dp"
+                    android:layout_width="106dp"
+                    android:layout_height="31dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="13dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
                     android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/havaNe"
+                    android:layout_width="176dp"
+                    android:layout_height="38dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="22dp"
+                    android:onClick="havaNedir"
+                    android:text="Hava nasıl"
+                    android:textSize="10dp" />
 
 
             </RelativeLayout>
@@ -68,6 +82,7 @@
         </Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
@@ -77,7 +92,8 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="0dp"
-        android:layout_marginBottom="2dp" >
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="-5dp">
 
 
     </FrameLayout>
