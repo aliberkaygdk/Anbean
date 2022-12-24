@@ -1,6 +1,7 @@
 package com.aliberkaygediko.anbean;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +13,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -104,8 +108,16 @@ public class PostActivity extends AppCompatActivity {
                 if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);*/
+                    ImagePicker.with(PostActivity.this)
+                            .cameraOnly()
+                            .crop()	/*    			//Crop image(Optional), Check Customization for more option
+                                               .compress(1024)//Final image size will be less than 1 MB(Optional)
+                                               .cameraOnly()
+                                               .maxResultSize(1080, 1080)*/	//Final image resolution will be less than 1080 x 1080(Optional)
+                            .start();
+
                 }
             }
         });
@@ -194,6 +206,19 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
+    public String getRealPathFromURI(Uri uri) {
+        String path= "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
+    }
     //Bitmap - uri dönüşümü
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -203,18 +228,31 @@ public class PostActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 
         if (num == 1) {
-            if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
+            if (resultCode == Activity.RESULT_OK) {
 
-                mImageUri=getImageUri(PostActivity.this,photo);
-
-
+                mImageUri = data.getData();
                 image_added.setImageURI(mImageUri);
+               //mImageUri= CropImage.getCaptureImageOutputUri(getApplicationContext());
+                //image_added.setImageURI(mImageUri);
+               // mImageUri=data.getData();
+
+                //Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+                /*image_added.setImageBitmap(photo);
+                Bitmap bm=((BitmapDrawable)image_added.getDrawable()).getBitmap();
+
+                Uri tempUri = getImageUri(getApplicationContext(), photo);*/
+
+                //mImageUri=getImageUri(this,bm);
+                //mImageUri=getImageUri(PostActivity.this,photo);
+
+
+                //image_added.setImageURI(mImageUri);
             }
         }
 

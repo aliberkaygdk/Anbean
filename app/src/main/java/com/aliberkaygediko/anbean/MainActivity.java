@@ -114,12 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                finish();
-                System.exit(0);
+
             }
         });
         alertDialog.show();

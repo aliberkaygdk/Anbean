@@ -57,26 +57,23 @@ public class PostDetailFragment extends Fragment {
         return view;
     }
 
+    private void readPost(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postid);
 
-        private void readPost(){
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postid);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                postList.clear();
+                Post post = dataSnapshot.getValue(Post.class);
+                postList.add(post);
 
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    postList.clear();
-                    Post post = dataSnapshot.getValue(Post.class);
-                    postList.add(post);
+                postAdapter.notifyDataSetChanged();
+            }
 
-                    postAdapter.notifyDataSetChanged();
-                }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-
+            }
+        });
     }
 }

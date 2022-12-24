@@ -73,7 +73,7 @@
                     android:layout_marginTop="7dp"
                     android:layout_marginEnd="22dp"
                     android:onClick="havaNedir"
-                    android:text="Hava nasıl"
+                    android:text="Weather ınfo"
                     android:textSize="10dp" />
 
 

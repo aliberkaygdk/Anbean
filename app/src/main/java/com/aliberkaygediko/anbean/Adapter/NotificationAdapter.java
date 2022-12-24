@@ -1,34 +1,37 @@
 package com.aliberkaygediko.anbean.Adapter;
 
-import static android.content.Context.MODE_PRIVATE;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 import com.aliberkaygediko.anbean.Fragments.PostDetailFragment;
 import com.aliberkaygediko.anbean.Fragments.ProfileFragment;
 import com.aliberkaygediko.anbean.Model.Notification;
 import com.aliberkaygediko.anbean.Model.Post;
 import com.aliberkaygediko.anbean.Model.User;
 import com.aliberkaygediko.anbean.R;
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ImageViewHolder> {
 
@@ -48,7 +51,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ImageViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final NotificationAdapter.ImageViewHolder holder, final int position) {
 
         final Notification notification = mNotification.get(position);
 
