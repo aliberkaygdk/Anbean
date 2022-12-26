@@ -11,7 +11,14 @@ public class Weather {
         return wMain;
     }
 
-    public void setwMain(String wMain) {
-        this.wMain = wMain;
+    @SerializedName("description")
+    String wDesc;
+
+    public String getwDesc() {
+        return wDesc;
     }
+
+
+
+
 }

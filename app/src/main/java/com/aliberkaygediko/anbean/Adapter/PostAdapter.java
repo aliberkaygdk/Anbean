@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.aliberkaygediko.anbean.CommentsActivity;
 import com.aliberkaygediko.anbean.FollowersActivity;
 import com.aliberkaygediko.anbean.Fragments.PostDetailFragment;
 import com.aliberkaygediko.anbean.Fragments.ProfileFragment;
+import com.aliberkaygediko.anbean.MainActivity;
 import com.aliberkaygediko.anbean.Model.Post;
 import com.aliberkaygediko.anbean.Model.User;
 import com.aliberkaygediko.anbean.R;
@@ -45,6 +47,7 @@ import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
     private Context mContext;
     private List<Post> mPosts;
+    View backToProfile;
 
     private FirebaseUser firebaseUser;
 
@@ -88,7 +92,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         isLiked(post.getPostid(), holder.like);
         isSaved(post.getPostid(), holder.save);
         nrLikes(holder.likes, post.getPostid());
-        getCommetns(post.getPostid(), holder.comments);
+        getComments(post.getPostid(), holder.comments);
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +221,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                                                     deleteNotifications(id, firebaseUser.getUid());
                                                     StorageReference photoDelete = FirebaseStorage.getInstance().getReferenceFromUrl(post.getPostimage());
                                                     photoDelete.delete();
+                                                    Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
 
                                                     notifyDataSetChanged();
 
@@ -323,7 +328,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
     }
 
-    private void getCommetns(String postId, final TextView comments){
+    private void getComments(String postId, final TextView comments){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override

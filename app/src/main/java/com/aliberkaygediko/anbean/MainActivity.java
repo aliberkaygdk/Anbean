@@ -2,6 +2,7 @@ package com.aliberkaygediko.anbean;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
@@ -23,6 +24,7 @@ import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,12 @@ import com.aliberkaygediko.anbean.Service.ApiClient;
 import com.aliberkaygediko.anbean.Service.ApiInterface;
 import com.aliberkaygediko.anbean.Service.Example;
 
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,9 +59,10 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CHECK_SETTINGS = 111;
-    TextView locationTV, temperature, textweather;
+    TextView locationTV, temperature, textweather, textdesc;
     String cityName;
     Button hava;
+
 
     AppBarLayout top_bar;
     BottomNavigationView bottom_navigation;
@@ -77,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
         temperature = findViewById(R.id.temp);
         textweather = findViewById(R.id.weatherDetail);
-        hava=findViewById(R.id.havaNe);
+        textdesc = findViewById(R.id.weatherDescription);
+        hava = findViewById(R.id.havaNe);
 
 
         Bundle intent = getIntent().getExtras();
@@ -96,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
     }
 
 
@@ -110,7 +118,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
+                LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+                SettingsClient client = LocationServices.getSettingsClient(getApplicationContext());
+                Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+                task.addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
+                            havaNedirr();
+
+                        }
+                    }
+                });
 
             }
         });
@@ -195,9 +215,14 @@ public class MainActivity extends AppCompatActivity {
             case 1000: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
                     @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
                     try {
 
+                        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                            showSettingAlert();
+                        }
                         String city = hereLocation(location.getLatitude(), location.getLongitude());
                         locationTV.setVisibility(View.INVISIBLE);
                         locationTV.setText(city);
@@ -225,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
 
                 temperature.setText(response.body().getMain().getTemp() + "°C");
                 textweather.setText(response.body().getWeatherList().get(0).getwMain());
+                textdesc.setText(response.body().getWeatherList().get(0).getwDesc());
 
             }
 
@@ -235,12 +261,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    public void havaNedir(View view){
+
+    public void havaNedir(View view) {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1000);
+
+
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1000);
+            } else {
+                showSettingAlert();
+            }
+
+
         } else {
-            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
@@ -251,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
                     locationTV.setText(city);
 
                     getWeatherData(locationTV.getText().toString().trim());
+                    hava.setVisibility(View.GONE);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(MainActivity.this, "Not Found GPS", Toast.LENGTH_SHORT).show();
@@ -261,9 +298,35 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            hava.setVisibility(View.GONE);
 
         }
+
+    }
+
+    public void havaNedirr() {
+
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+            try {
+                locationTV.setVisibility(View.VISIBLE);
+                @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                String city = hereLocation(location.getLatitude(), location.getLongitude());
+                locationTV.setText(city);
+
+                getWeatherData(locationTV.getText().toString().trim());
+                hava.setVisibility(View.GONE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this, "Not Found GPS2", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+        //hava.setVisibility(View.GONE);
+
 
     }
 

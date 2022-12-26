@@ -9,16 +9,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -39,14 +34,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 
-import java.io.ByteArrayOutputStream;
+
 import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
 
+    private static final int PICK_FROM_GALLERY = 1;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     private static final int CAMERA_REQUEST = 1888;
 
@@ -94,9 +89,19 @@ public class PostActivity extends AppCompatActivity {
         dialog.setPositiveButton("Galeriden Anbeanla", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                CropImage.activity()
+                num=0;
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+                }
+                    else{
+                    ImagePicker.with(PostActivity.this)
+                            .galleryOnly()
+                            .cropSquare()
+                            .start();
+               /* CropImage.activity()
                         .setAspectRatio(1, 1)
-                        .start(PostActivity.this);
+                        .start(PostActivity.this);*/
+                }
             }
         });
 
@@ -112,7 +117,8 @@ public class PostActivity extends AppCompatActivity {
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);*/
                     ImagePicker.with(PostActivity.this)
                             .cameraOnly()
-                            .crop()	/*    			//Crop image(Optional), Check Customization for more option
+                            .cropSquare()
+                            	/*    			//Crop image(Optional), Check Customization for more option
                                                .compress(1024)//Final image size will be less than 1 MB(Optional)
                                                .cameraOnly()
                                                .maxResultSize(1080, 1080)*/	//Final image resolution will be less than 1080 x 1080(Optional)
@@ -123,9 +129,7 @@ public class PostActivity extends AppCompatActivity {
         });
         dialog.show();
 
-        /*CropImage.activity()
-                .setAspectRatio(1, 1)
-                .start(PostActivity.this);*/
+
 
     }
 
@@ -198,34 +202,41 @@ public class PostActivity extends AppCompatActivity {
         if (requestCode == MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+                ImagePicker.with(PostActivity.this)
+                        .cameraOnly()
+                        .cropSquare()	/*    			//Crop image(Optional), Check Customization for more option
+                                               .compress(1024)//Final image size will be less than 1 MB(Optional)
+                                               .cameraOnly()
+                                               .maxResultSize(1080, 1080)*/	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+
             } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
+
+        }
+        if (requestCode ==PICK_FROM_GALLERY) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "gallery permission granted", Toast.LENGTH_LONG).show();
+                //Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                //startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                ImagePicker.with(PostActivity.this)
+                        .galleryOnly()
+                        .cropSquare()	/*    			//Crop image(Optional), Check Customization for more option
+                                               .compress(1024)//Final image size will be less than 1 MB(Optional)
+                                               .cameraOnly()
+                                               .maxResultSize(1080, 1080)*/	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+
+            } else {
+                Toast.makeText(this, "gallery permission denied", Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    public String getRealPathFromURI(Uri uri) {
-        String path= "";
-        if (getContentResolver() != null) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                path = cursor.getString(idx);
-                cursor.close();
-            }
-        }
-        return path;
-    }
-    //Bitmap - uri dönüşümü
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -237,32 +248,18 @@ public class PostActivity extends AppCompatActivity {
 
                 mImageUri = data.getData();
                 image_added.setImageURI(mImageUri);
-               //mImageUri= CropImage.getCaptureImageOutputUri(getApplicationContext());
-                //image_added.setImageURI(mImageUri);
-               // mImageUri=data.getData();
 
-                //Bitmap photo = (Bitmap) data.getExtras().get("data");
-
-                /*image_added.setImageBitmap(photo);
-                Bitmap bm=((BitmapDrawable)image_added.getDrawable()).getBitmap();
-
-                Uri tempUri = getImageUri(getApplicationContext(), photo);*/
-
-                //mImageUri=getImageUri(this,bm);
-                //mImageUri=getImageUri(PostActivity.this,photo);
-
-
-                //image_added.setImageURI(mImageUri);
             }
         }
 
         if (num != 1) {
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            if ( resultCode == Activity.RESULT_OK) {
 
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                mImageUri = result.getUri();
 
+                mImageUri = data.getData();
                 image_added.setImageURI(mImageUri);
+
+
             } else {
                 Toast.makeText(this, "Something gone wrong or you are cancelled this!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(PostActivity.this, MainActivity.class));
