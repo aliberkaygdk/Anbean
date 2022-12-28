@@ -6,19 +6,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<<<<<<< Updated upstream
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
    
-=======
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
->>>>>>> Stashed changes
-
 
     <uses-feature android:name="android.hardware.camera" />
+
 
     <queries>
         <intent>
@@ -35,22 +29,7 @@
         android:roundIcon="@drawable/ic_icon_squircle"
         android:supportsRtl="true"
         android:theme="@style/Theme.Anbean"
-        android:usesCleartextTraffic="false"
         tools:targetApi="31">
-        <activity
-            android:name=".PrivacyPolicy"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".TermsOfUse"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
         <activity
             android:name=".OptionsActivity"
             android:exported="false">
@@ -141,15 +120,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <service
-            android:name=".MainActivity"
-            android:foregroundServiceType="location" />
+            android:foregroundServiceType="location"
+            android:name=".MainActivity" />
     </application>
 
-<<<<<<< Updated upstream
 
 </manifest>
-=======
-</manifest>
->>>>>>> Stashed changes
