@@ -13,7 +13,7 @@
  ## Veritabanı Tasarımı 
  - <img src="https://user-images.githubusercontent.com/96066271/209739010-f64bac22-369d-40ba-8e17-f2ab288435ef.png" width=600 height=220>
  ## VeriTabanı Örnek SS
- <img src=https://user-images.githubusercontent.com/96066271/209739166-2889543f-d9bb-499a-9347-ef5cb6d26413.png" width=150 height=150><img src"https://user-images.githubusercontent.com/96066271/209739211-b086ad65-e4fd-4ba5-b07d-911450a36ddd.png" width=150 height=300><img src"https://user-images.githubusercontent.com/96066271/209739246-c3991440-9ea1-4877-a9de-d1fc1f2af5a0.png" width=150 height=300>
+ <img src="https://user-images.githubusercontent.com/96066271/209739166-2889543f-d9bb-499a-9347-ef5cb6d26413.png" width=150 height=150><img src="https://user-images.githubusercontent.com/96066271/209739211-b086ad65-e4fd-4ba5-b07d-911450a36ddd.png" width=150 height=150><img src="https://user-images.githubusercontent.com/96066271/209739246-c3991440-9ea1-4877-a9de-d1fc1f2af5a0.png" width=150 height=150>
 
 
 
