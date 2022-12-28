@@ -21,6 +21,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -194,13 +195,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             addresses = geocoder.getFromLocation(lat, lon, 10);
             if (addresses.size() > 0) {
-                for (Address adr : addresses) {
-                    if (adr.getLocality() != null && adr.getLocality().length() > 0) {
-                        cityName = adr.getLocality();
-                        break;
-                    }
+                cityName = addresses.get(addresses.size() - 2).getAdminArea();
 
-                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -239,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeatherData(String name) {
+
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         Call<Example> call = apiInterface.getWeatherData(name);
@@ -284,7 +281,17 @@ public class MainActivity extends AppCompatActivity {
                     locationTV.setVisibility(View.VISIBLE);
                     Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     String city = hereLocation(location.getLatitude(), location.getLongitude());
+                    //city="Turkey";
                     locationTV.setText(city);
+
+                    if (city=="") {
+                        locationTV.setText("Turkey");
+                    }
+
+                    double asd = location.getLatitude();
+                    double asd2 = location.getLongitude();
+
+
 
                     getWeatherData(locationTV.getText().toString().trim());
                     hava.setVisibility(View.GONE);

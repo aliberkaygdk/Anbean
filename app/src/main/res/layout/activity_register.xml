@@ -51,6 +51,29 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:layout_marginTop="15dp"
+
+        />
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="I read this rules and i accept:" />
+
+    <TextView
+        android:id="@+id/termsOfUse"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:text="Terms of Use"
+        android:textColor="@color/purple_700"
+        />
+
+    <TextView
+        android:id="@+id/privacyPolicy"
+        android:layout_width="331dp"
+        android:layout_height="wrap_content"
+        android:text="Privacy Policy"
+        android:textColor="@color/purple_700"
         />
 
     <Button
@@ -58,13 +81,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/register"
         android:text="Register"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:onClick="registerButton"/>
+
     <TextView
+        android:id="@+id/txt_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alredy have an account? Log In"
-        android:id="@+id/txt_login"
+        android:layout_marginTop="15dp"
         android:onClick="txtlogin"
-        android:layout_marginTop="15dp"/>
+        android:text="Alredy have an account? Log In" />
+
+
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText username, fullname, email, password;
     Button register;
-    TextView txt_login;
+    TextView txt_login,terms,policy;
+    CheckBox checkBox;
 
     FirebaseAuth auth;
     DatabaseReference reference;
@@ -44,6 +46,9 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         register = findViewById(R.id.register);
         txt_login = findViewById(R.id.txt_login);
+        terms=findViewById(R.id.termsOfUse);
+        policy=findViewById(R.id.privacyPolicy);
+        checkBox=findViewById(R.id.checkBox);
 
         auth = FirebaseAuth.getInstance();
 
@@ -55,28 +60,47 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         register.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                pd = new ProgressDialog(RegisterActivity.this);
-                pd.setMessage("Please wait...");
-                pd.show();
+                if (checkBox.isChecked()) {
+                    pd = new ProgressDialog(RegisterActivity.this);
+                    pd.setMessage("Please wait...");
+                    pd.show();
 
-                String str_username = username.getText().toString();
-                String str_fullname = fullname.getText().toString();
-                String str_email = email.getText().toString();
-                String str_password = password.getText().toString();
+                    String str_username = username.getText().toString();
+                    String str_fullname = fullname.getText().toString();
+                    String str_email = email.getText().toString();
+                    String str_password = password.getText().toString();
 
-                if (TextUtils.isEmpty(str_username) || TextUtils.isEmpty(str_fullname) || TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password)){
-                    Toast.makeText(RegisterActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
-                } else if(str_password.length() < 6){
-                    Toast.makeText(RegisterActivity.this, "Password must have 6 characters!", Toast.LENGTH_SHORT).show();
-                } else {
-                    register(str_username, str_fullname, str_email, str_password);
+                    if (TextUtils.isEmpty(str_username) || TextUtils.isEmpty(str_fullname) || TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password)) {
+                        Toast.makeText(RegisterActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
+                    } else if (str_password.length() < 6) {
+                        Toast.makeText(RegisterActivity.this, "Password must have 6 characters!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        register(str_username, str_fullname, str_email, str_password);
+                    }
+                }else{
+                    Toast.makeText(RegisterActivity.this, "Please check terms and policy", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(RegisterActivity.this,TermsOfUse.class);
+                startActivity(intent);
+            }
+        });
+        policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(RegisterActivity.this,PrivacyPolicy.class);
+                startActivity(intent);
+            }
+        });
     }
-    public void register(View view){
+    /*public void register(View view){
         pd = new ProgressDialog(RegisterActivity.this);
         pd.setMessage("Please wait...");
         pd.show();
@@ -94,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
             register(str_username, str_fullname, str_email, str_password);
         }
 
-    }
+    }*/
 
     public void register(final String username, final String fullname, String email, String password){
         auth.createUserWithEmailAndPassword(email, password)

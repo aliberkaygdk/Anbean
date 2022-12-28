@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.aliberkaygediko.anbean.CommentsActivity;
 import com.aliberkaygediko.anbean.FollowersActivity;
 import com.aliberkaygediko.anbean.Fragments.PostDetailFragment;
 import com.aliberkaygediko.anbean.Fragments.ProfileFragment;
+import com.aliberkaygediko.anbean.Fragments.SearchFragment;
 import com.aliberkaygediko.anbean.MainActivity;
 import com.aliberkaygediko.anbean.Model.Post;
 import com.aliberkaygediko.anbean.Model.User;
@@ -55,6 +57,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
     private Context mContext;
     private List<Post> mPosts;
+    Button btn;
+
     View backToProfile;
 
     private FirebaseUser firebaseUser;
@@ -62,7 +66,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     public PostAdapter(Context context, List<Post> posts){
         mContext = context;
         mPosts = posts;
+
     }
+
 
     @NonNull
     @Override
@@ -76,6 +82,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final Post post = mPosts.get(position);
+
 
         Glide.with(mContext).load(post.getPostimage())
                 .apply(new RequestOptions().placeholder(R.drawable.placeholder))
@@ -231,7 +238,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                                         });
                                 return true;
                             case R.id.report:
-                                Toast.makeText(mContext, "Reported clicked!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Reported..", Toast.LENGTH_SHORT).show();
                                 return true;
                             default:
                                 return false;
@@ -272,6 +279,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
             more = itemView.findViewById(R.id.more);
+            btn=itemView.findViewById(R.id.btn_follow);
         }
     }
 
