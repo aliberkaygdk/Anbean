@@ -6,6 +6,7 @@
  - Kullanıcının kayıt esnasında ve kullanım esnasında verileri şifrelenip Firebase veritabanında saklanır. Firebase Google tarafından geliştirilmiştir.
  - Bu uygulama kazanç amaçlı oluşturulan bir uygulama değildir. Bu uygulamanın üreticileri öğrencidir ve bu uygulamayı geliştirme sebepleri
  - bilgilerini pekiştirmek, geliştirmek ve bildikleriyle sektöre uygun yazılımları üretebilmektir.
- ## Veri Tabanı Diyagramı
- [<img src="209737923-5fb2400a-6134-49ae-9e7c-40bc0cdb775d.png" width="50px"/>](https://user-images.githubusercontent.com/96066271/209737923-5fb2400a-6134-49ae-9e7c-40bc0cdb775d.png)
+ ## Mimari Tercihi
+ - ![mvmm](https://user-images.githubusercontent.com/96066271/209738374-430f7905-5cbd-4894-bccf-3addf2945964.png)
+
 
