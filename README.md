@@ -7,7 +7,10 @@
  - Bu uygulama kazanç amaçlı oluşturulan bir uygulama değildir.Bu uygulamanın üreticileri öğrencidir ve bu uygulamayı geliştirme sebepleri
  - bilgilerini pekiştirmek, geliştirmek ve bildikleriyle sektöre uygun yazılımları üretebilmektir.
  
- Uygulamamız Firebase ile okuma-yazma ilişkisi, Openweathermap ile sadece okuma ilişkisi içindedir. Openweather sitesinde hava durumunun güncel verileri alınır. Openweather bu verileri json olarak tutar. Bizim uygulamamız bunu retrofit ile çekip jsondan gerekli bilgileri alır ve kullanıcıya sunar. Firebase de verileri json olarak tutar, fakat firebase ile veri alışverişi için retrofit gibi bir kütüphaneye gerek yoktur. Firebase kütüphanesini eklememiz bunun için yeterli olur. Sonrasında Firebase'in kendi fonksiyonlarını çağırarak veri okuma-yazma işlevini gerçekleştiririz
+ Uygulamamız Firebase ile okuma-yazma ilişkisi, Openweathermap ile sadece okuma ilişkisi içindedir. Openweather sitesinde hava durumunun güncel verileri alınır. Openweather bu verileri json olarak tutar. Bizim uygulamamız bunu retrofit ile çekip jsondan gerekli bilgileri alır ve kullanıcıya sunar. Firebase de verileri json olarak tutar, fakat firebase ile veri alışverişi için retrofit gibi bir kütüphaneye gerek yoktur. Firebase kütüphanesini eklememiz bunun için yeterli olur. Sonrasında Firebase'in kendi fonksiyonlarını çağırarak veri okuma-yazma işlevini gerçekleştiririz.
+ 
+ Profil fotoğrafını düzenlemek için [jhavatar:Android-Image-Cropper](https://github.com/jhavatar/Android-Image-Cropper) kullanılmıştır.
+ Galeri ve kameradan fotoğraf kırpılması için [dhaval2404:imagepicker:2.1](https://github.com/Dhaval2404/ImagePicker) kullanılmıştır.
  
 ## Mimari Tercihi
 - <img src="readme_docs/anbean-mimari.png" width=400 height=300>
