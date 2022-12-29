@@ -6,6 +6,9 @@
  - Kullanıcının kayıt esnasında ve kullanım esnasında verileri şifrelenip Firebase veritabanında saklanır. Firebase Google tarafından geliştirilmiştir.
  - Bu uygulama kazanç amaçlı oluşturulan bir uygulama değildir.Bu uygulamanın üreticileri öğrencidir ve bu uygulamayı geliştirme sebepleri
  - bilgilerini pekiştirmek, geliştirmek ve bildikleriyle sektöre uygun yazılımları üretebilmektir.
+ 
+ Uygulamamız Firebase ile okuma-yazma ilişkisi, Openweathermap ile sadece okuma ilişkisi içindedir. Openweather sitesinde hava durumunun güncel verileri alınır. Openweather bu verileri json olarak tutar. Bizim uygulamamız bunu retrofit ile çekip jsondan gerekli bilgileri alır ve kullanıcıya sunar. Firebase de verileri json olarak tutar, fakat firebase ile veri alışverişi için retrofit gibi bir kütüphaneye gerek yoktur. Firebase kütüphanesini eklememiz bunun için yeterli olur. Sonrasında Firebase'in kendi fonksiyonlarını çağırarak veri okuma-yazma işlevini gerçekleştiririz
+ 
 ## Mimari Tercihi
 - <img src="readme_docs/anbean-mimari.png" width=400 height=300>
 - <img src="https://user-images.githubusercontent.com/96066271/209738374-430f7905-5cbd-4894-bccf-3addf2945964.png" width=300 height=200>
