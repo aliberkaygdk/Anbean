@@ -19,7 +19,7 @@
 - Platformun ortalama ziyaret edilme sıklığı: Haftada her gün kullanıcı başına - 1 saat beklenmekte, bu kullanım aktifliği oluşturulmaya çalışılacaktır.
 - Kullanıcı sayısı: 10.000 (yayınlama sonrası ilk 3 ay içinde.)
 - Aynı anda platformda aktif kullanıcı sayısı: 4000 (yayınlanma sonrası ilk 3 ay içinde.)
-- Reklam gelirleri: 100 bin ₺ (yayınlanma sonrası ilk 3 ay içinde)
+- Reklam gelirleri: 100 bin ₺ (yayınlanma sonrası ilk 3 ay içinde).
 
 ### Beklenen Sonuçlar
 
