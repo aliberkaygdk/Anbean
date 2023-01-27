@@ -4,9 +4,16 @@
  - Kullanıcıdan konum izni, kamera izni, galeriye erişim izni istenir. Bu izinler kötü amaçlı kullanılmaz.
  - Konum bilgisi sadece kullanıcı tarafından erişilebilirdir.
  - Kullanıcının kayıt esnasında ve kullanım esnasında verileri şifrelenip Firebase veritabanında saklanır. Firebase Google tarafından geliştirilmiştir.
- - Bu uygulama kazanç amaçlı oluşturulan bir uygulama değildir. Bu uygulamanın üreticileri öğrencidir ve bu uygulamayı geliştirme sebepleri
+ - Bu uygulama kazanç amaçlı oluşturulan bir uygulama değildir.Bu uygulamanın üreticileri öğrencidir ve bu uygulamayı geliştirme sebepleri
  - bilgilerini pekiştirmek, geliştirmek ve bildikleriyle sektöre uygun yazılımları üretebilmektir.
+ 
+ Uygulamamız Firebase ile okuma-yazma ilişkisi, Openweathermap ile sadece okuma ilişkisi içindedir. Openweather sitesinde hava durumunun güncel verileri alınır. Openweather bu verileri json olarak tutar. Bizim uygulamamız bunu retrofit ile çekip jsondan gerekli bilgileri alır ve kullanıcıya sunar. Firebase de verileri json olarak tutar, fakat firebase ile veri alışverişi için retrofit gibi bir kütüphaneye gerek yoktur. Firebase kütüphanesini eklememiz bunun için yeterli olur. Sonrasında Firebase'in kendi fonksiyonlarını çağırarak veri okuma-yazma işlevini gerçekleştiririz.
+ 
+ Profil fotoğrafını düzenlemek için [jhavatar:Android-Image-Cropper](https://github.com/jhavatar/Android-Image-Cropper) kullanılmıştır.
+ Galeri ve kameradan fotoğraf kırpılması için [dhaval2404:imagepicker:2.1](https://github.com/Dhaval2404/ImagePicker) kullanılmıştır.
+ 
 ## Mimari Tercihi
+- <img src="readme_docs/anbean-mimari.png" width=400 height=300>
 - <img src="https://user-images.githubusercontent.com/96066271/209738374-430f7905-5cbd-4894-bccf-3addf2945964.png" width=300 height=200>
 ## UX Design
 <img src="https://user-images.githubusercontent.com/96066271/209738520-271e8f42-e1ec-4079-9aa9-7e62938f5307.png" width=150 height=300> <img src="https://user-images.githubusercontent.com/96066271/209738528-86c50ddc-0b6b-4a73-a905-37a7dce908df.png" width=150 height=300><img src="https://user-images.githubusercontent.com/96066271/209738544-0d294bab-086e-4737-8778-8b483f51fd05.png" width=150 height=300><img src="https://user-images.githubusercontent.com/96066271/209738567-005c6a6c-1930-4e81-bca7-6be233f04069.png" width=150 height=300><img src="https://user-images.githubusercontent.com/96066271/209738581-a21bce1a-631a-404b-b727-916a503e8e66.png" width=150 height=300>
