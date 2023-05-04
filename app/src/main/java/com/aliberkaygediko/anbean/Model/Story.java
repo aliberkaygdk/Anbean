@@ -1,5 +1,6 @@
 package com.aliberkaygediko.anbean.Model;
 
+
 public class Story {
     private String imageurl;
     private long timestart;
