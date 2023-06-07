@@ -1,12 +1,14 @@
 package com.aliberkaygediko.anbean.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aliberkaygediko.anbean.Adapter.PostAdapter;
 
 import com.aliberkaygediko.anbean.Adapter.StoryAdapter;
+import com.aliberkaygediko.anbean.ChatActivity;
 import com.aliberkaygediko.anbean.Model.Post;
 import com.aliberkaygediko.anbean.Model.Story;
 import com.aliberkaygediko.anbean.R;
@@ -47,6 +50,7 @@ public class HomeFragment extends Fragment {
     private List<Story> storyList;
 
     private List<String> followingList;
+    ImageView chat;
 
     ProgressBar progress_circular;
 
@@ -54,6 +58,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        chat=view.findViewById(R.id.chatbutton);
+
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -77,6 +84,14 @@ public class HomeFragment extends Fragment {
         progress_circular = view.findViewById(R.id.progress_circular);
 
         checkFollowing();
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

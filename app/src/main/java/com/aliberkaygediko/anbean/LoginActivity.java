@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class LoginActivity extends AppCompatActivity {
 
 
@@ -41,13 +43,16 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
 
     FirebaseAuth auth;
+    DatabaseReference reference;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
+      // firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (auth.getCurrentUser() != null) {
+            status("online");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -65,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
        auth = FirebaseAuth.getInstance();
+       firebaseUser = auth.getCurrentUser();
 
 
         password = binding.editTextPassword;
@@ -96,9 +102,17 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void status(String status){
 
+        reference=FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid());
+        HashMap<String,Object> hashMap=new HashMap<>();
+        hashMap.put("status",status);
+        reference.updateChildren(hashMap);
+
+    }
 
     public void login(View view) {
+
         String emailRead = binding.editTextId.getText().toString();
         String passwordRead = binding.editTextPassword.getText().toString();
 
@@ -116,13 +130,14 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
+                                 reference = FirebaseDatabase.getInstance().getReference().child("Users")
                                         .child(auth.getCurrentUser().getUid());
 
                                 reference.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         pd.dismiss();
+                                        status("online");
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);

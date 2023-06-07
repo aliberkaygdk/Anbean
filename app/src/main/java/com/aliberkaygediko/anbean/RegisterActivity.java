@@ -136,6 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
                             map.put("fullname", fullname);
                             map.put("imageurl", "https://firebasestorage.googleapis.com/v0/b/anbean-2b59d.appspot.com/o/placeholder.jpg?alt=media&token=a2c2af4a-079c-4a97-af3b-ec971d15aaf2");
                             map.put("bio", "");
+                            map.put("status","online");
 
                             reference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

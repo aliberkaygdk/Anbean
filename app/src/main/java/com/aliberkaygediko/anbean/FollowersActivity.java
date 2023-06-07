@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.aliberkaygediko.anbean.Adapter.UserAdapter;
+
 import com.aliberkaygediko.anbean.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
